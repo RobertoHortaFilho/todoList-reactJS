@@ -1,19 +1,47 @@
+import { ReactNode, useEffect, useState } from 'react';
+import { Note } from '../components/Note';
 import styles from '../Home.module.css';
-import { useState } from 'react';
+
 
 interface Inotes {
     content?: string;
     title: string;
     userId: string;
     _id: string;
-    update: Date;
-    date: Date;
+
 
 }
 
 export function HomePage(){
     const [aparecer, setApareder] =  useState<boolean>(false)
-    const [notes, setNotes] = useState<string[]>()
+    const [notes, setNotes] = useState<Inotes[]>([
+        {title:'a',userId:'a',_id:'a'},
+        {title:'b',userId:'b',_id:'b'},
+        {title:'c',userId:'c',_id:'c'},
+        {title:'a',userId:'a',_id:'a'},
+        {title:'b',userId:'b',_id:'b'},
+        {title:'c',userId:'c',_id:'c'}])
+    
+       
+
+    async function getNotes(){
+        const response = await fetch('http://localhost:3030/notes/62469fa0a8760599b47be801')
+        const data = await response.json()
+        if(data.response == true){
+            console.log('acertou')
+            setNotes(data.notes)
+            
+            return data.notes
+        }
+        
+    }
+
+    //getNotes()
+    useEffect(() =>{
+        
+    })
+
+    
     
     function trocar(){
         setApareder(!aparecer)
@@ -36,17 +64,8 @@ export function HomePage(){
             const titleLabel = document.getElementById('titleLabel') as HTMLElement
             titleLabel.innerHTML = 'TITLE:'
         }
-
-        fetch('http://localhost:3030/notes/62469fa0a8760599b47be801' ).then(
-            (response:Response) => response.json(),
-        ).then(
-            (data) => {
-                setNotes(data)
-                console.log(notes)
-            }
-        )
         
-        setApareder(!aparecer)
+        //setApareder(!aparecer)
 
         
     }
@@ -79,31 +98,13 @@ export function HomePage(){
         }
             
 
-            <div id='notes-container' className={styles.notes}>
-                <div className={styles.note}>
-                    <h1 className={styles.title}>titulo</h1>
-                    <p className={styles.content}>descriçao muito foda msm</p>
-                </div>
-                <div className={styles.note}>
-                    <h1 className={styles.title}>titulo</h1>
-                    <p className={styles.content}>descriçao muito foda msm</p>
-                </div>
-                <div className={styles.note}>
-                    <h1 className={styles.title}>titulo</h1>
-                    <p className={styles.content}>descriçao muito foda msm</p>
-                </div>
-                <div className={styles.note}>
-                    <h1 className={styles.title}>titulo</h1>
-                    <p className={styles.content}>descriçao muito foda msm</p>
-                </div>
-                <div className={styles.note}>
-                    <h1 className={styles.title}>titulo</h1>
-                    <p className={styles.content}>descriçao muito foda msm</p>
-                </div>
-                <div className={styles.note}>
-                    <h1 className={styles.title}>titulo</h1>
-                    <p className={styles.content}>descriçao muito foda msm</p>
-                </div>
+            <div id='notes-container' className={styles.notesContent}>
+                {notes.map((note:Inotes, index) =>{                   
+                    return <Note key={index} title={note.title} content={note.content}></Note>       
+                })as ReactNode}
+                
+
+
             </div> 
             
         </div>
