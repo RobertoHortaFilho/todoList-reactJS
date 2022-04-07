@@ -7,7 +7,8 @@
     margin:1em;
     padding:.8em;
     transform: scale(1);
-    transition: transform .5s 
+    transition: transform .5s ;
+    
 }
 .note:hover{
     transform: scale(1.1)
@@ -27,4 +28,61 @@
     height: 80%;
     border-radius: 10px;
     color:#9E422B;
+    
+}
+
+.delete{
+    background-image: url('../icons/trash-can.png');
+    background-size: 1.5em 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ffffff00;
+    width: 2em;
+    height:2em;
+    border-radius: 50%;
+    position: absolute;
+    bottom:10px;
+    right:10px;
+    transform: scale(1);
+    opacity: 40%;
+    transition: transform .4s opacity .4s;
+    border: 0px;
+}
+
+.delete:hover{
+    cursor:pointer;
+    opacity: 1;
+    transform: scale(1.2)
+}
+
+.popUpdelete{
+    background-color: #F7CB57;
+    border: 2px #00000099 solid;
+    width: 12em;
+    height: 5.5em;
+    position:absolute;
+    top:8em;
+    left:50%;
+    transform:translateX(-6em);
+    border-radius: .5em;
+    text-align: center;
+}
+.popUpMsg{
+    margin:.5em;
+    color:#9E422B;
+    height:1em;
+    font-weight: bold;
+}
+.popUpButton{
+    color:#9E422B;
+    background-color :#00000000;
+    border: 1px solid #00000088;
+    border-radius: 5px;
+    padding: .2em;
+    margin: .8em 1em;
+}
+.popUpButton:hover{
+    transform: scale(1.05);
+    font-weight: bold;
+    cursor: pointer;
 }

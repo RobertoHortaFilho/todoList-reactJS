@@ -1,106 +1,66 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Note } from '../components/Note';
+import { NewNote, Inotes } from '../components/NewNote';
 import styles from '../Home.module.css';
+import popUp from '../components/NewNote.module.css'
+import { Request } from '../Requests/HttpRequest'
 
+const req = new Request()
 
-interface Inotes {
-    content?: string;
-    title: string;
-    userId: string;
-    _id: string;
-
-
-}
 
 export function HomePage(){
-    const [aparecer, setApareder] =  useState<boolean>(false)
-    const [notes, setNotes] = useState<Inotes[]>([
-        {title:'a',userId:'a',_id:'a'},
-        {title:'b',userId:'b',_id:'b'},
-        {title:'c',userId:'c',_id:'c'},
-        {title:'a',userId:'a',_id:'a'},
-        {title:'b',userId:'b',_id:'b'},
-        {title:'c',userId:'c',_id:'c'}])
-    
-       
+    const [aparecer, setAparecer] =  useState<boolean>(false)
+    const [notes, setNotes] = useState<Inotes[]>([])
+    const [popUpElement, setPopUpElement] = useState<HTMLElement>()
+    const [popUpDelete, setPopUpDelete] = useState<boolean>(false)
+
 
     async function getNotes(){
-        const response = await fetch('http://localhost:3030/notes/62469fa0a8760599b47be801')
-        const data = await response.json()
+        const id = '62469fa0a8760599b47be801'
+        const data = await req.MethodgetNotesUsers(id)
         if(data.response == true){
-            console.log('acertou')
-            setNotes(data.notes)
-            
-            return data.notes
+            setNotes(data.notes!)
         }
-        
     }
 
-    //getNotes()
-    useEffect(() =>{
-        
-    })
-
-    
-    
-    function trocar(){
-        setApareder(!aparecer)
-        console.log(aparecer)
+    function setPopup(setElement:HTMLElement){
+        setPopUpElement(setElement)
     }
-
-    function saveNote(){
-        event!.preventDefault();
-        const titleObj = document.getElementById('title') as HTMLInputElement;
-        const title:string = titleObj.value.trim()
-        const contentObj = document.getElementById('content') as HTMLInputElement;
-        const content:string = contentObj.value.trim();
-
-        if(title == ''){
-            console.log('sem titulo')
-            const titleLabel = document.getElementById('titleLabel') as HTMLElement
-            titleLabel.innerHTML = 'TITLE: adicione um titulo por favor'
-            return
-        }else{
-            const titleLabel = document.getElementById('titleLabel') as HTMLElement
-            titleLabel.innerHTML = 'TITLE:'
+    
+    function switchPopup(){
+        if(aparecer === true){  
+            popUpElement?.classList.add(popUp.fadeOut)
+            console.log('vai aparecer')
         }
-        
-        //setApareder(!aparecer)
-
-        
+        setTimeout(()=>{setAparecer(!aparecer)},500) 
     }
+
+    useEffect(()=>{
+        getNotes()
+
+
+    },[])
 
     return (
         <div >
             <div id="header" className={styles.header}>
                 <h1 className={styles.headerTitulo}>ToDoList</h1>
-                <div className={styles.headerNotes} onClick={trocar}></div>
+                <div className={styles.headerNotes} onClick={() => switchPopup()}></div>
                 <div className={styles.headerButton}></div>
             </div>
-            {aparecer ? 
-                <aside className={styles.popup}>
-                    <p className={styles.newNoteTitle}>ToDoNotes</p>
-                    <form action="" method="get">
-                        <label id='titleLabel'>TITLE:</label>
-                        <br />
-                        <textarea name="title" id="title" cols={30} rows={2} className={styles.formTitle}></textarea>
-                        <br />
-                        <label>CONTENT:</label>
-                        <br />
-                        <textarea name="content" id="content" cols={30} rows={10} className={styles.formContent}></textarea>
-                        <br />
-                        <input type="submit" value="adicionar" className={styles.formSubmit} 
-                            onClick={saveNote}/>
-                    </form>
-                </aside>
-            :
-            <div></div>
-        }
+            {aparecer &&
+                <NewNote closeWindow={switchPopup} setPopup={setPopup} reload={getNotes}></NewNote>
+            }
             
-
             <div id='notes-container' className={styles.notesContent}>
                 {notes.map((note:Inotes, index) =>{                   
-                    return <Note key={index} title={note.title} content={note.content}></Note>       
+                    return <Note 
+                    _id={note['_id']} 
+                    userId={note.userId} 
+                    key={index} 
+                    title={note.title} 
+                    content={note.content}
+                    reload={getNotes}/>    
                 })as ReactNode}
                 
 
