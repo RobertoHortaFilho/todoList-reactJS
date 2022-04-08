@@ -11,15 +11,26 @@
     
 }
 .note:hover{
-    transform: scale(1.1)
+    transform: scale(1.03)
 }
 
 .title{
+    text-align: center;
+    margin:0px;
+    background-color: #00000000;
     color:#9E422B;
     border-radius: 10px;
     font-size: 1.5em;
     margin-bottom: .2em;
-    padding: 5px;
+    padding: 4px;
+    width: 94%;
+}
+
+.titleInput{
+    height: 3em;
+    font-size: 1em;
+    font-weight: normal;
+    resize: none;
 }
 
 .content{
@@ -50,6 +61,30 @@
 }
 
 .delete:hover{
+    cursor:pointer;
+    opacity: 1;
+    transform: scale(1.2)
+}
+
+.confirm{
+    background-image: url('../icons/tick-inside-circle.png');
+    background-size: 1.5em 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ffffff00;
+    width: 2em;
+    height:2em;
+    border-radius: 50%;
+    position: absolute;
+    bottom:10px;
+    left:10px;
+    transform: scale(1);
+    opacity: 40%;
+    transition: transform .4s opacity .4s;
+    border: 0px;
+}
+
+.confirm:hover{
     cursor:pointer;
     opacity: 1;
     transform: scale(1.2)

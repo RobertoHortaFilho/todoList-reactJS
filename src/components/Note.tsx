@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import noteStyle from './Note.module.css'
 import {Request} from '../Requests/HttpRequest'
 const req = new Request();
@@ -16,6 +16,12 @@ interface noteProps {
 export function Note(props:noteProps){
 
     const [popUp,setPopUp] = useState<boolean>(false)
+    const [changeTitle, setChangeTitle] = useState<boolean>(false)
+
+    function enviar(){
+        console.log(enviar)
+    }
+
 
 
     return (
@@ -46,9 +52,13 @@ export function Note(props:noteProps){
                     }} id='confirm'>Confirm</button>   
                 </div>
             }
-            <p className={noteStyle.title}> {props.title || 'ti'} </p>
-            <div className={noteStyle.content}> {props.content || 'con'} </div>
+            {changeTitle ? 
+                <textarea name="title" id="aaaaa" className={`${noteStyle.title} ${noteStyle.titleInput}`}/>:
+                <p className={noteStyle.title} onClick={()=>{setChangeTitle(true)}}> {props.title || 'titulo'} </p>
+            }
+            <div className={noteStyle.content}> {props.content || 'content'} </div>
             <button className={noteStyle.delete} onClick={()=>{setPopUp(!popUp)}}></button>
+            <button type='submit' className={noteStyle.confirm} onClick={()=>{enviar()}}></button>
             
         </div>
     )
