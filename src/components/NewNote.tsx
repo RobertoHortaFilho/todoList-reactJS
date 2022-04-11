@@ -34,7 +34,6 @@ function NewNote(props:InewNote){
         const content:string = contentObj.value.trim();
 
         if(title == ''){
-            console.log('sem titulo')
             const titleLabel = document.getElementById('titleLabel') as HTMLElement
             titleLabel.innerHTML = 'TITLE: adicione um titulo por favor'
             return
@@ -62,7 +61,6 @@ function NewNote(props:InewNote){
          req.MethodpostNotes(body).then( data => {
             if(data.response){
                 props.reload()
-                console.log('criado')
             }
         })
 

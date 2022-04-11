@@ -30,7 +30,6 @@ export function HomePage(){
     function switchPopup(){
         if(aparecer === true){  
             popUpElement?.classList.add(popUp.fadeOut)
-            console.log('vai aparecer')
         }
         setTimeout(()=>{setAparecer(!aparecer)},500) 
     }
