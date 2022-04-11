@@ -17,11 +17,15 @@ export function Note(props:noteProps){
 
     const [popUp,setPopUp] = useState<boolean>(false)
     const [changeTitle, setChangeTitle] = useState<boolean>(false)
+    const [changeContent, setChangeContent] = useState<boolean>(false)
 
-    function enviar(){
-        console.log(enviar)
+    function Salvar(){          //salvar o note
+        if(!changeTitle && !changeContent){
+            return
+        }
+        setChangeContent(false)
+        setChangeTitle(false)
     }
-
 
 
     return (
@@ -53,12 +57,18 @@ export function Note(props:noteProps){
                 </div>
             }
             {changeTitle ? 
-                <textarea name="title" id="aaaaa" className={`${noteStyle.title} ${noteStyle.titleInput}`}/>:
+                <textarea name="title" id="formTitle" className={`${noteStyle.title} ${noteStyle.titleInput}`}/>
+            :
                 <p className={noteStyle.title} onClick={()=>{setChangeTitle(true)}}> {props.title || 'titulo'} </p>
             }
-            <div className={noteStyle.content}> {props.content || 'content'} </div>
+            {changeContent?
+                <textarea name="title" id="formConetent" className={`${noteStyle.content} ${noteStyle.contentInput}`}/>
+            :
+                <div className={noteStyle.content} 
+                onClick={()=>{setChangeContent(true)}}> {props.content || 'content'} </div>
+            }
             <button className={noteStyle.delete} onClick={()=>{setPopUp(!popUp)}}></button>
-            <button type='submit' className={noteStyle.confirm} onClick={()=>{enviar()}}></button>
+            <button type='submit' className={noteStyle.confirm} onClick={()=>{Salvar()}}></button>
             
         </div>
     )

@@ -1,6 +1,8 @@
 .note{
+    position:relative;
     border-radius: 10px;
     min-width: 12em;
+    max-width: 23em;
     flex-grow: 1;
     height: 19em;
     background-color: #F7CB57;
@@ -27,6 +29,7 @@
 }
 
 .titleInput{
+    align-items: center;
     height: 3em;
     font-size: 1em;
     font-weight: normal;
@@ -40,6 +43,17 @@
     border-radius: 10px;
     color:#9E422B;
     
+}
+
+.contentInput{
+    margin: 0px;
+    align-items: center;
+    background-color: #00000000;
+    resize: none;
+    width: 92%;
+    height: 11em;
+    position:relative;
+    padding: .5em;
 }
 
 .delete{
