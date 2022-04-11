@@ -4,6 +4,7 @@ import { NewNote, Inotes } from '../components/NewNote';
 import styles from '../Home.module.css';
 import popUp from '../components/NewNote.module.css'
 import { Request } from '../Requests/HttpRequest'
+import { notDeepEqual } from 'assert';
 
 const req = new Request()
 
@@ -12,7 +13,6 @@ export function HomePage(){
     const [aparecer, setAparecer] =  useState<boolean>(false)
     const [notes, setNotes] = useState<Inotes[]>([])
     const [popUpElement, setPopUpElement] = useState<HTMLElement>()
-    const [popUpDelete, setPopUpDelete] = useState<boolean>(false)
 
 
     async function getNotes(){
@@ -57,7 +57,8 @@ export function HomePage(){
                     return <Note 
                     _id={note['_id']} 
                     userId={note.userId} 
-                    key={index} 
+                    keyIndex={index}
+                    key={note['_id']}
                     title={note.title} 
                     content={note.content}
                     reload={getNotes}/>    

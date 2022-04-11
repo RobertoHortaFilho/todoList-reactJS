@@ -5,6 +5,7 @@ export interface INotebody{
     title?: string;
     content?: string;
     userId?: string;
+    _id?:string;
 }
 
 export interface Iresponse{
@@ -41,6 +42,18 @@ export class Request{
         {method:'DELETE'})
         const data:Iresponse = await request.json();
         return data
+    }
+
+    public async MethodUpdateNotes(body:INotebody,idNote:string):Promise<Iresponse>{
+        const requestOptions = {
+            method: 'PATCH',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(body)
+        }
+        const request = await fetch(`${this.baseLink}/notes/${idNote}`,requestOptions)
+        const data:Iresponse = await request.json() 
+        return data
+        
     }
 }
 

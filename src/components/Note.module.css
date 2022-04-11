@@ -2,7 +2,7 @@
     position:relative;
     border-radius: 10px;
     min-width: 12em;
-    max-width: 23em;
+    max-width: 20em;
     flex-grow: 1;
     height: 19em;
     background-color: #F7CB57;
@@ -39,7 +39,9 @@
 .content{
     font-size: 1em;
     margin: .5em;
-    height: 80%;
+    min-height: 60%;
+    max-height: 72%;
+    height: auto;
     border-radius: 10px;
     color:#9E422B;
     
@@ -134,4 +136,11 @@
     transform: scale(1.05);
     font-weight: bold;
     cursor: pointer;
+}
+
+.saveAttempt{
+    font-size: .9em;
+    color:#9E422B;
+    text-align: center; 
+    
 }
