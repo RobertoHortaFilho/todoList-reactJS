@@ -1,0 +1,23 @@
+.load{
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    border-top: 3px solid transparent;
+    border-left: 3px solid #00000099;
+    border-right: 3px solid #00000099;
+    border-bottom: 3px solid #00000099;
+    animation: spin 10s infinite cubic-bezier(0.215, 0.610, 0.355, 1);
+    position:absolute;
+    top: 2.9em;
+    left :45%;
+}
+
+
+@keyframes spin{
+    from{
+        transform: rotateZ(0deg);
+    }
+    to{
+        transform: rotateZ(3600deg);
+    }
+}

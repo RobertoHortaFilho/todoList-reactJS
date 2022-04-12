@@ -95,3 +95,8 @@
     cursor: pointer;
 }
 
+.load{
+    position: absolute;
+    bottom: 4em;
+}
+
