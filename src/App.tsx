@@ -1,3 +1,4 @@
+import { NotePage } from "./pages/Notes"
 import { HomePage } from "./pages/Home"
 
 function App() {
