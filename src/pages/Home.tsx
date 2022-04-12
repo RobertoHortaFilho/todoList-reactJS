@@ -13,7 +13,35 @@ export function HomePage(){
         if(email.includes('@') && email.includes('.')){
             return true
         }
+        alert('escolha um email valido')
         return false
+    }
+
+    function verifyPassword(){
+        const passwordInput = document.getElementById('passwordSignin') as HTMLInputElement
+        const password = passwordInput.value.trim()
+        let week = false
+        if (password == ''){
+            week = true
+        }
+        if (password.length < 8){
+            week = true
+        }
+        if(week){
+            alert('senha deve conter 8 characters e nao pode ser vazia')
+            return false
+        }
+        return true
+    }
+
+    function verifyUserName(){
+        const userNameInput = document.getElementById('usernameSignin') as HTMLInputElement
+        const userName = userNameInput.value.trim()
+        if(userName == ''){
+            alert('selecione um nome de usuário valido')
+            return false
+        }
+        return true
     }
     
 
@@ -24,9 +52,9 @@ export function HomePage(){
         }
         setInLogin(true)
         const emailInput = document.getElementById('emailLabelLogin') as HTMLInputElement
-        const email = emailInput.value
+        const email = emailInput.value.trim()
         const passwordInput = document.getElementById('passwordLogin') as HTMLInputElement
-        const password = passwordInput.value
+        const password = passwordInput.value.trim()
         passwordInput.value = ''
         
         req.login({
@@ -44,6 +72,34 @@ export function HomePage(){
         
     }
 
+    function createAccount(){
+        event!.preventDefault()
+        if(!verifyEmail('emailSignin')){
+            return
+        }
+        if(!verifyPassword()){
+            return
+        }
+        if(!verifyUserName()){
+            return
+        }
+        const inputEmail = document.getElementById('emailSignin') as HTMLInputElement
+        const inputpassword = document.getElementById('passwordSignin') as HTMLInputElement
+        const inputUserName = document.getElementById('usernameSignin') as HTMLInputElement
+        const email = inputEmail.value.trim()
+        const password = inputpassword.value.trim()
+        const userName = inputUserName.value.trim()
+
+        const body = {
+            email,
+            password,
+            userName,
+        }
+        req.createAccount(body)
+
+
+    }
+
 
     return(
         <div>
@@ -58,15 +114,21 @@ export function HomePage(){
                     <h1 className={styles.title}> Criar conta </h1> 
                     <form action="">
                         <p className={`${styles.labels}`} >Email: </p>
-                        <input className={`${styles.inputs}`} type="email" name="email" id="emailLabelSignin" />
+                        <input className={`${styles.inputs}`} type="email" name="email" 
+                        id="emailSignin" onBlur={()=>{verifyEmail('emailSignin')}}/>
                        
                         <p className={`${styles.labels}`} >Password:</p>
-                        <input className={`${styles.inputs}`} type="password" name="" id="passwordSignin" />
+                        <input className={`${styles.inputs}`} type="password" name="" 
+                        id="passwordSignin" 
+                        onBlur={verifyPassword}/>
                         
                         <p className={`${styles.labels}`} >Username:</p>
-                        <input className={`${styles.inputs}`} type="text" name="" id="usernameSignin" />
+                        <input className={`${styles.inputs}`} type="text" name="" id="usernameSignin" 
+                        onBlur={verifyUserName}/>
+
+
                         {inLogin && <Loading></Loading>}
-                        <input className={`${styles.submit}`} type="submit" value="Confirmar" onClick={login}/>
+                        <input className={`${styles.submit}`} type="submit" value="Confirmar" onClick={createAccount}/>
                     </form>
                 
                 </div>

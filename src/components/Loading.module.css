@@ -12,6 +12,10 @@
     left :45%;
 }
 
+.load2{
+    animation-delay: .1s;
+    
+}
 
 @keyframes spin{
     from{
