@@ -1,12 +1,12 @@
 
 
-export function ConfirmEmail(){
 
-    
+
+export function ConfirmEmail(){
     
     return (<>
     
-    
+    ouououo
     
     </>)
 }
