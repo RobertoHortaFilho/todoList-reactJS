@@ -2,6 +2,11 @@
 
 interface Iresponse{
     response: boolean
+    data?:{
+        hash:string,
+        email:string
+    },
+    error:string
 }
 
 interface Ilogin{
@@ -27,7 +32,7 @@ export class RequestsUsers{
 
         const requestOptions = {
             method : 'POST',
-            headers : {'Content-Type':' application/json'},
+            headers : {'Content-Type':'application/json'},
             body : JSON.stringify(body),
         }
 
@@ -37,13 +42,20 @@ export class RequestsUsers{
     }
 
     public async createAccount(body:InewAccount):Promise<Iresponse>{
-        this.Emailexist(body.email).then(exist =>{
-            console.log(exist)
-            return {response: exist}
-        })
-        
-        return {response: false}
-        
+        const ExistEmail = await this.Emailexist(body.email)
+        if (ExistEmail){
+            return {response:false, error:'email'}
+        }else{
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+                
+            }
+            const response = await fetch(`${this.baseLink}/users/signup`,requestOptions)
+            const data:Iresponse = await response.json()
+            return data
+        }
     }
 
     private async Emailexist(email:string):Promise<boolean>{

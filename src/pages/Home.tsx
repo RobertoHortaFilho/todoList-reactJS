@@ -6,6 +6,7 @@ const req = new RequestsUsers()
 
 export function HomePage(){
     const [inLogin, setInLogin] = useState<Boolean>(false)
+    const [inSignIn , setInSignIn] = useState<boolean>(false)
 
     function verifyEmail(id:string){
         const emailInput = document.getElementById(id) as HTMLInputElement
@@ -83,6 +84,7 @@ export function HomePage(){
         if(!verifyUserName()){
             return
         }
+        setInSignIn(true)
         const inputEmail = document.getElementById('emailSignin') as HTMLInputElement
         const inputpassword = document.getElementById('passwordSignin') as HTMLInputElement
         const inputUserName = document.getElementById('usernameSignin') as HTMLInputElement
@@ -95,7 +97,21 @@ export function HomePage(){
             password,
             userName,
         }
-        req.createAccount(body)
+        req.createAccount(body).then(data => {
+            setInSignIn(false)
+            console.log(data)
+            if(data.response){
+                //email criado com sucesso
+            }else{
+                if(data.error === 'email'){
+                    //email ja existe
+                }else{
+                    //error interno
+                }
+            }
+        })
+
+        
 
 
     }
@@ -127,7 +143,7 @@ export function HomePage(){
                         onBlur={verifyUserName}/>
 
 
-                        {inLogin && <Loading></Loading>}
+                        {inSignIn && <Loading></Loading>}
                         <input className={`${styles.submit}`} type="submit" value="Confirmar" onClick={createAccount}/>
                     </form>
                 
